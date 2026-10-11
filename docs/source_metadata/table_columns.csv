@@ -1,0 +1,97 @@
+"table_schema","table_name","ordinal_position","column_name","data_type","character_maximum_length","numeric_precision","numeric_scale","is_nullable","column_default"
+"bronze","olist_customers",1,"customer_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_customers",2,"customer_unique_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_customers",3,"customer_zip_code_prefix","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_customers",4,"customer_city","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_customers",5,"customer_state","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_geolocation",1,"geolocation_zip_code","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_geolocation",2,"geolocation_lat","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_geolocation",3,"geolocation_lng","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_geolocation",4,"geolocation_city","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_geolocation",5,"geolocation_state","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",2,"order_item_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",3,"product_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",4,"seller_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",5,"shipping_limit_date","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",6,"price","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_items",7,"freight_value","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_payments",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_payments",2,"payment_sequential","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_payments",3,"payment_type","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_payments",4,"payment_installments","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_payments",5,"payment_value","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",1,"review_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",2,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",3,"review_score","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",4,"review_comment_title","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",5,"review_comment_message","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",6,"review_creation_date","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_order_reviews",7,"review_answer_timestamp","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",2,"customer_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",3,"order_status","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",4,"order_purchase_timestamp","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",5,"order_approved_at","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",6,"order_delivered_carrier_date","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",7,"order_delivered_customer_date","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_orders",8,"order_estimated_delivery_date","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_producct_category_name",1,"product_category_name","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_producct_category_name",2,"product_category_name_english","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",1,"product_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",2,"product_category_name","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",3,"product_name_length","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",4,"product_description_length","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",5,"product_photos_qty","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",6,"product_weight_g","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",7,"product_length_cm","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",8,"product_height_cm","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_products",9,"product_width_cm","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_seller",1,"seller_id","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_seller",2,"seller_zip_code_prefix","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_seller",3,"seller_city","character varying",NULL,NULL,NULL,"YES",NULL
+"bronze","olist_seller",4,"seller_state","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_customers",1,"customer_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_customers",2,"customer_unique_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_customers",3,"customer_zip_code_prefix","integer",NULL,32,0,"YES",NULL
+"silver","olist_customers",4,"customer_city","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_customers",5,"customer_state","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_geolocation",1,"geolocation_zip_code","integer",NULL,32,0,"YES",NULL
+"silver","olist_geolocation",2,"geolocation_lag","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_geolocation",3,"geolocation_lng","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_geolocation",4,"geolocation_city","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_geolocation",5,"geolocation_state","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",2,"order_item_id","integer",NULL,32,0,"YES",NULL
+"silver","olist_order_items",3,"product_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",4,"seller_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",5,"shipping_limit_date","date",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",6,"price","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_items",7,"freight_value","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_payments",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_payments",2,"payment_sequential","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_payments",3,"payment_type","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_payments",4,"payment_installments","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_order_payments",5,"payment_value","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",1,"order_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",2,"customer_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",3,"order_status","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",4,"order_purchase_timestamp","timestamp without time zone",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",5,"order_approved_at","timestamp without time zone",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",6,"order_delivered_carrier_date","timestamp without time zone",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",7,"order_delivered_customer_date","timestamp without time zone",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",8,"order_estimated_delivery_date","timestamp without time zone",NULL,NULL,NULL,"YES",NULL
+"silver","olist_orders",9,"date_quality_status","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",1,"product_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",2,"product_category_name","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",3,"product_name_length","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",4,"product_desciption_length","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",5,"product_photos_qty","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",6,"product_weight_g","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",7,"product_length_cm","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",8,"product_height_cm","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_products",9,"product_width_cm","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_seller",1,"seller_id","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_seller",2,"seller_zip_code_prefix","numeric",NULL,NULL,NULL,"YES",NULL
+"silver","olist_seller",3,"seller_city","character varying",NULL,NULL,NULL,"YES",NULL
+"silver","olist_seller",4,"seller_state","character varying",NULL,NULL,NULL,"YES",NULL

@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-11",
+  "workbook_sha256": "ed8777f472b66713852e27abca0b48662ea39c3a91d1b2ee06a98b448908469c",
+  "checks": {
+    "final_dashboard_headline_caches": "passed",
+    "five_reporting_exports_vs_workbook_cells": "passed",
+    "seller_top5_chart_range": "passed",
+    "seller_prefix_uniqueness_among_15": "passed",
+    "markdown_relative_links": "passed",
+    "xlsx_archive_and_cached_error_scan": "passed",
+    "derived_snapshot_metrics": "passed",
+    "two_dashboard_previews": "rendered and visually reviewed"
+  },
+  "not_performed": [
+    "PostgreSQL execution of reconstructed SQL",
+    "Fresh raw-data end-to-end run",
+    "Native Microsoft Excel automation"
+  ],
+  "scope": "Snapshot reconciliation; no data-quality reporting added."
+}
