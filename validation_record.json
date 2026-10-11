@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-11",
+  "workbook_sha256": "ed8777f472b66713852e27abca0b48662ea39c3a91d1b2ee06a98b448908469c",
+  "checks": {
+    "final_dashboard_headline_caches": "passed",
+    "five_reporting_exports_vs_workbook_cells": "passed",
+    "seller_top5_chart_range": "passed",
+    "seller_prefix_uniqueness_among_15": "passed",
+    "markdown_relative_links": "passed",
+    "xlsx_archive_and_cached_error_scan": "passed",
+    "derived_snapshot_metrics": "passed",
+    "two_dashboard_previews": "rendered and visually reviewed"
+  },
+  "not_performed": [
+    "PostgreSQL execution in the packaging environment",
+    "Native Microsoft Excel automation"
+  ],
+  "scope": "Snapshot reconciliation; no data-quality reporting added.",
+  "author_database_verification": {
+    "date": "2026-10-11",
+    "database": "olist_confirmation",
+    "fresh_database_reproduction": "confirmed by author",
+    "final_dashboard_views_and_checks": "passed, confirmed by author",
+    "screenshot_evidenced_controls": {
+      "all_orders": 99441,
+      "delivered_orders": 96478,
+      "delivered_merchandise_sales": "13221498.11",
+      "average_order_value": "137.04"
+    },
+    "full_final_result_grid_retained": false
+  }
+}

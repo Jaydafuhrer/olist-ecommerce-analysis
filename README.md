@@ -116,7 +116,7 @@ python3 scripts/derive_insights.py
 
 The final workbook's cached headline values, chart references, exported reporting tables and derived findings were checked locally. Dashboard previews were rendered from the final workbook. The delivered workbook preserves the existing charts, formula caches, source tables and layout.
 
-Core SQL definitions and bronze/silver column layouts were recovered from database metadata. The original loading statements and exact CREATE statements for the five added dashboard views were not supplied; those scripts are reconstructed and labelled accordingly. Their exports were verified, but the reconstructed scripts have not been executed against PostgreSQL here. A fresh-database run is still needed to establish end-to-end reproducibility. This repository makes no claim of a locally tested production pipeline.
+Core SQL definitions and bronze/silver column layouts were recovered from database metadata. The original loading statements and exact CREATE statements for the five added dashboard views were not supplied; those scripts are reconstructed and labelled accordingly. On 11 October 2026, the author reported completing a fresh-database reproduction in `olist_confirmation` and confirmed that the final dashboard views and validation checks passed. A supplied PostgreSQL screenshot independently shows PASS for 99,441 orders, 96,478 delivered orders, R$13,221,498.11 full-history merchandise sales and R$137.04 full-history AOV. The remaining dashboard checks were confirmed by the author; their result grid was not retained in this package. SQL was executed on the author’s Mac, not in the packaging environment. This is a validated local reproduction, not a production deployment.
 
 ## Source
 
