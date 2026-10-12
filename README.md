@@ -82,6 +82,9 @@ Read [metric definitions and limitations](docs/methodology.md) and [refresh inst
 | `sql/02_load_silver.sql` | Reconstructed cleaning and typing logic |
 | `sql/03_reporting_views.sql` | Recovered core reporting views, migrated to gold |
 | `sql/07_dashboard_views.sql` | Five reconstructed final-dashboard view definitions |
+| `sql/08_optimize_cohort.sql` | Checked migration for an existing database |
+| `sql/09_cohort_benchmark.sql` | Original/candidate correctness and performance comparison |
+| `sql/10_restore_original_cohort.sql` | Optional rollback to the exported original definition |
 | `sql/04_analysis_queries.sql` | Read-only reporting queries |
 | `sql/05_validation.sql` | Dashboard metric reconciliation against snapshot controls |
 | `sql/06_export.psql` | Export queries for refreshing Excel inputs |
@@ -89,6 +92,21 @@ Read [metric definitions and limitations](docs/methodology.md) and [refresh inst
 | `data/exports/` | Aggregated reference CSVs and derived insights |
 | `docs/` | Methodology, refresh instructions, source metadata and verification record |
 | `scripts/derive_insights.py` | Recompute insights from the included exports |
+
+## SQL performance work
+
+Rewrote the 90-day cohort view with `LEAD` and `ROW_NUMBER`, replacing repeated CTE scans, a customer self-join and two hash aggregations. A bidirectional `EXCEPT ALL` check confirmed zero output differences across 17 cohorts, 75,123 customers and 1,711 repeat customers.
+
+| Query | work_mem | Three-run median |
+|---|---:|---:|
+| Original | 4MB | 797.904 ms |
+| Rewrite | 4MB | 622.141 ms |
+| Original | 16MB | 819.205 ms |
+| Rewrite | 16MB | 536.427 ms |
+
+A subsequent same-transaction comparison at 16MB measured 750.421 ms for the original and 560.257 ms for the rewrite, a 25.3% reduction in that pair. At 4MB, temporary blocks read/written fell from 1,842/2,356 in a representative original run to 928/931 for the rewrite. At 16MB, both versions avoided reported temporary-file I/O. These local warm-cache measurements are not a universal performance guarantee.
+
+Only the query rewrite was applied permanently. The 16MB setting was tested with `SET LOCAL` and rolled back; no index or server-wide configuration change was made. See [benchmark method and limitations](docs/methodology.md#cohort-query-optimisation), [reproducible benchmark SQL](sql/09_cohort_benchmark.sql) and [recorded timings](data/exports/cohort_benchmark.csv).
 
 ## Supporting Python verification
 

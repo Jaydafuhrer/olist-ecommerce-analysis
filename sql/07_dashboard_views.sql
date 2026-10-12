@@ -19,27 +19,29 @@ SELECT c.purchase_month,c.total_orders,c.delivered_orders,c.merchandise_sales,c.
 FROM m c LEFT JOIN m p ON p.purchase_month=(c.purchase_month-INTERVAL '1 year')::date;
 
 CREATE OR REPLACE VIEW gold.vw_customer_repeat_90d AS
-WITH delivered AS (
- SELECT order_id,customer_unique_id,purchased_at
- FROM gold.vw_order_analysis
- WHERE order_status='DELIVERED' AND purchased_at < TIMESTAMP '2018-09-01'
- AND NULLIF(TRIM(customer_unique_id),'') IS NOT NULL
+WITH ranked AS (
+    SELECT customer_unique_id, purchased_at,
+        LEAD(purchased_at) OVER w AS second_purchase_at,
+        ROW_NUMBER() OVER w AS purchase_number
+    FROM gold.vw_order_analysis
+    WHERE order_status = 'DELIVERED'
+      AND purchased_at < TIMESTAMP '2018-09-01'
+      AND NULLIF(TRIM(customer_unique_id), '') IS NOT NULL
+    WINDOW w AS (PARTITION BY customer_unique_id ORDER BY purchased_at)
 ), firsts AS (
- SELECT customer_unique_id,MIN(purchased_at) AS first_purchase_at
- FROM delivered GROUP BY customer_unique_id
-), behavior AS (
- SELECT f.customer_unique_id,DATE_TRUNC('month',f.first_purchase_at)::date AS cohort_month,
- COUNT(DISTINCT d.order_id)>1 AS repeated
- FROM firsts f JOIN delivered d ON d.customer_unique_id=f.customer_unique_id
- AND d.purchased_at BETWEEN f.first_purchase_at AND f.first_purchase_at+INTERVAL '90 days'
- WHERE f.first_purchase_at >= TIMESTAMP '2017-01-01'
- AND DATE_TRUNC('month',f.first_purchase_at)+INTERVAL '1 month'+INTERVAL '90 days' <= TIMESTAMP '2018-09-01'
- GROUP BY f.customer_unique_id,f.first_purchase_at
+    SELECT DATE_TRUNC('month', purchased_at)::date AS cohort_month,
+        second_purchase_at <= purchased_at + INTERVAL '90 days' AS repeated_90d
+    FROM ranked WHERE purchase_number = 1
 )
-SELECT cohort_month,COUNT(*) AS cohort_customers,
- COUNT(*) FILTER (WHERE repeated) AS repeat_customers_90d,
- ROUND(100.0*COUNT(*) FILTER (WHERE repeated)/NULLIF(COUNT(*),0),2) AS repeat_purchase_90d_pct
-FROM behavior GROUP BY cohort_month;
+SELECT cohort_month, COUNT(*) AS cohort_customers,
+    COUNT(*) FILTER (WHERE repeated_90d) AS repeat_customers_90d,
+    ROUND(100.0 * COUNT(*) FILTER (WHERE repeated_90d)
+          / NULLIF(COUNT(*), 0), 2) AS repeat_purchase_90d_pct
+FROM firsts
+WHERE cohort_month >= DATE '2017-01-01'
+  AND cohort_month + INTERVAL '1 month' + INTERVAL '90 days'
+      <= TIMESTAMP '2018-09-01'
+GROUP BY cohort_month;
 
 CREATE OR REPLACE VIEW gold.vw_delivery_priority AS
 SELECT customer_state,delivered_orders,lateness_eligible_orders,late_orders,late_delivery_pct,

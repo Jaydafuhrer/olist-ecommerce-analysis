@@ -34,7 +34,7 @@ Seller labels show the first eight characters. All 15 labels were checked as uni
 
 Core view SELECT definitions and 96 column layouts across 16 bronze/silver tables came from the supplied database metadata. Those historical metadata files retain pre-migration schema names. Column spellings such as `geolocation_lag`, `product_desciption_length` and `olist_producct_category_name` are preserved to match the user's database.
 
-The loader and five new dashboard CREATE VIEW statements are reconstructed. No PostgreSQL execution or raw-data reproduction was performed locally. Checks compare exports, cached workbook values, reference ranges and independently derived metrics. Original metadata is retained for traceability; it does not prove original indexes, constraints, grants or loading logic. The existing internal date-status field is retained for compatibility with recovered table/view definitions, but no data-quality reporting is included.
+The loader and five new dashboard CREATE VIEW statements are reconstructed. The author reported reproducing the project from source in a fresh PostgreSQL database on 11 October 2026 and confirmed the final dashboard validation passed. The four full-history totals were also evidenced in a supplied screenshot. The full final validation grid was not retained; the remaining results are author-confirmed. No PostgreSQL execution was performed in the packaging environment. Checks compare exports, cached workbook values, reference ranges and independently derived metrics. Original metadata is retained for traceability; it does not prove original indexes, constraints, grants or loading logic. The existing internal date-status field is retained for compatibility with recovered table/view definitions, but no data-quality reporting is included.
 
 Sales do not measure profit. Freight ratios do not identify carrier margin. The analysis supports investigation and does not establish causation.
 
@@ -47,3 +47,17 @@ The final workbook preserves the Executive overview and Delivery & Customer Anal
 Jan–Aug 2017 sales were R$2,993,456.13 across 21,998 orders. Jan–Aug 2018 sales were R$7,218,125.12 across 52,783 orders. Freight-to-merchandise ratios were 16.02% and 17.09%, respectively. These equal-period figures support the README findings.
 
 Seller 4a3ca931’s gap against the overall late rate is 2.93 percentage points when calculated from unrounded counts. Subtracting the displayed rounded rates, 9.71% and 6.77%, gives 2.94 points; the SQL and supporting Python calculation use the underlying counts.
+
+## Cohort query optimisation
+
+On 12 October 2026, the author tested a window-function rewrite in olist_project. The exact pre-optimisation definition is retained in docs/source_metadata/cohort_before_optimization.sql. The original counts delivered rows within 90 days; the rewrite determines whether the second ordered purchase timestamp falls within that interval. It retains the same source view, delivery/status filters, blank-ID exclusion, complete-cohort cutoff, rounding and same-day behavior. It does not introduce DISTINCT order counting or remove duplicates beyond the original semantics.
+
+The screenshot of the bidirectional EXCEPT ALL comparison showed 0 differing rows, 17 cohorts, 75,123 customers and 1,711 repeats. The author subsequently confirmed the checked replacement transaction completed successfully. The final packaged dashboard-view script now contains this tested cohort SELECT.
+
+Measurements use EXPLAIN (ANALYZE, BUFFERS), so instrumentation overhead is included. The first reported 4MB run included shared reads and is excluded from warm-run medians. Later plans used shared-cache hits. The early baseline database identity was not captured in its plan; subsequent definitions and tests were explicitly in olist_project. This limits confidence in the historical 4MB comparison. The final same-session 16MB pair is the clearest directly paired measurement.
+
+The three-run 16MB medians show a 34.5% observed reduction, while the later same-transaction pair shows 25.3%. Runs varied with local workload and parallel worker scheduling; three runs and one paired comparison do not establish a statistically stable production improvement. All reported timings, including an extra candidate run of 603.732 ms, are retained in data/exports/cohort_benchmark.csv. A statistics refresh did not materially correct the row-estimate errors; those estimates remain an area for future investigation.
+
+At 4MB the rewrite reduced temporary-file I/O. At 16MB both queries avoided disk spills. Memory tuning is separate from the query rewrite: work_mem is an allowance per operation and can multiply across operations and workers. No permanent memory increase or index was applied. Existing output data and Excel layouts remain unchanged.
+
+For another environment, run sql/09_cohort_benchmark.sql in one session, confirm zero differences, record the PostgreSQL version and memory settings, warm both queries and alternate their order over multiple runs. Apply sql/08_optimize_cohort.sql only after checking correctness; sql/10_restore_original_cohort.sql restores the exported original definition.

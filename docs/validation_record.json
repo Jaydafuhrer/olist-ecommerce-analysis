@@ -12,9 +12,38 @@
     "two_dashboard_previews": "rendered and visually reviewed"
   },
   "not_performed": [
-    "PostgreSQL execution of reconstructed SQL",
-    "Fresh raw-data end-to-end run",
+    "PostgreSQL execution in the packaging environment",
     "Native Microsoft Excel automation"
   ],
-  "scope": "Snapshot reconciliation; no data-quality reporting added."
+  "scope": "Snapshot reconciliation; no data-quality reporting added.",
+  "author_database_verification": {
+    "date": "2026-10-11",
+    "database": "olist_confirmation",
+    "fresh_database_reproduction": "confirmed by author",
+    "final_dashboard_views_and_checks": "passed, confirmed by author",
+    "screenshot_evidenced_controls": {
+      "all_orders": 99441,
+      "delivered_orders": 96478,
+      "delivered_merchandise_sales": "13221498.11",
+      "average_order_value": "137.04"
+    },
+    "full_final_result_grid_retained": false
+  },
+  "cohort_optimization": {
+    "date": "2026-10-12",
+    "database": "olist_project",
+    "screenshot_verified": {
+      "differing_rows": 0,
+      "cohort_rows": 17,
+      "customers": 75123,
+      "repeat_customers": 1711
+    },
+    "deployment": "author confirmed successful checked replacement transaction",
+    "paired_16mb_ms": {
+      "original": 750.421,
+      "candidate": 560.257
+    },
+    "permanent_memory_change": false,
+    "indexes_added": false
+  }
 }
